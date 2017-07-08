@@ -11,12 +11,17 @@ buildscript {
 }
 
 apply plugin: "kotlin"
-apply plugin: 'java-gradle-plugin'
+apply plugin: "maven"
+apply plugin: "java-gradle-plugin"
 
 repositories {
     mavenCentral()
     maven { url "https://jitpack.io" }
 }
+
+archivesBaseName = 'fern'
+group = 'com.nishtahir'
+version = '0.1'
 
 task createClasspathManifest {
     def outputDir = file("$buildDir/$name")

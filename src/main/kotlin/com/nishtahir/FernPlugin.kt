@@ -13,16 +13,7 @@ class FernPlugin : Plugin<Project> {
         }
 
         extensions.create("fern", FernPluginExtension::class.java)
-        val extension = extensions[FernPluginExtension::class]
-
-        tasks.create("decompile") {
-            val destination = File(extension.outputDir.or("decompiled-sources"))
-            val path = File(extension.classesDir.or("$buildDir/kotlin-classes"))
-            val decompiler = ConsoleDecompiler(destination, IFernflowerPreferences.DEFAULTS).apply {
-                addSpace(path, true)
-            }
-            decompiler.decompileContext()
-        }
+        task(mapOf("type" to DecompileTask::class.java), "decompile")
     }
 
     private fun Project.hasKotlinPlugin() = !plugins.hasPlugin("kotlin") || plugins.hasPlugin("kotlin-android")

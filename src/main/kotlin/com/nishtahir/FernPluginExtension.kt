@@ -1,6 +1,6 @@
 package com.nishtahir
 
-class FernPluginExtension {
+open class FernPluginExtension {
     var classesDir = ""
     var outputDir = ""
 }

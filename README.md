@@ -11,10 +11,11 @@ buildscript {
 
     repositories {
         maven { url "https://jitpack.io" }
+        mavenCentral()
     }
 
     dependencies {
-        classpath "com.nishtahir:fern:0.1"
+	    classpath 'com.github.nishtahir:fern:-SNAPSHOT'
     }
 }
 
@@ -63,6 +64,7 @@ fern {
      unitTestMode = false
 }
 ```
+A description on what these options do and how they work can be found in the official FernFlower [documentation](https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine).
 
 While sensible defaults have been set for Java and Kotlin project class files, you may chose to specify your own
 sources using the `classesDir` property in the `fern` configuration.

@@ -6,7 +6,7 @@ import org.jetbrains.java.decompiler.main.decompiler.ConsoleDecompiler
 import org.jetbrains.java.decompiler.main.extern.IFernflowerPreferences
 import java.io.File
 
-class FernPlugin : Plugin<Project> {
+open class FernPlugin : Plugin<Project> {
     override fun apply(project: Project) = with(project) {
         if (!hasKotlinPlugin()) {
             return@with

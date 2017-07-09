@@ -10,9 +10,16 @@ open class DecompileTask : DefaultTask() {
 
     @TaskAction
     fun decompile() = with(project) {
+
+        val defaultClassesDir = if (pluginManager.hasPlugin("kotlin-android")) {
+            "${buildDir}/intermediates/classes"
+        } else {
+            "$buildDir/kotlin-classes"
+        }
+
         val extension = extensions[FernPluginExtension::class]
         val destination = File(extension.outputDir.or("${buildDir}/decompiled-sources"))
-        val path = File(extension.classesDir.or("$buildDir/kotlin-classes"))
+        val path = File(extension.classesDir.or(defaultClassesDir))
         val decompiler = ConsoleDecompiler(destination, IFernflowerPreferences.DEFAULTS).apply {
             addSpace(path, true)
         }

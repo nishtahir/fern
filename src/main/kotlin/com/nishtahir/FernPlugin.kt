@@ -8,7 +8,7 @@ import java.io.File
 
 class FernPlugin : Plugin<Project> {
     override fun apply(project: Project) = with(project) {
-        if (hasKotlinPlugin()) {
+        if (!hasKotlinPlugin()) {
             return@with
         }
 
@@ -16,5 +16,5 @@ class FernPlugin : Plugin<Project> {
         task(mapOf("type" to DecompileTask::class.java), "decompile")
     }
 
-    private fun Project.hasKotlinPlugin() = !plugins.hasPlugin("kotlin") || plugins.hasPlugin("kotlin-android")
+    private fun Project.hasKotlinPlugin() = plugins.hasPlugin("kotlin") || plugins.hasPlugin("kotlin-android")
 }

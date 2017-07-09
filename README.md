@@ -4,11 +4,6 @@ This is a wrapper around the Jetbrains FernFlower decompiler.
 
 [![](https://jitpack.io/v/nishtahir/fern.svg)](https://jitpack.io/#nishtahir/fern)
 
-## Requirements
-
-Fern requires either the `kotlin` or `kotlin-android` plugin to be applied to your build script for
-the plugin to take effect.
-
 ## Usage
 
 ```
@@ -67,6 +62,36 @@ fern {
      dumpOriginalLines = false
      unitTestMode = false
 }
+```
+
+While sensible defaults have been set for Java and Kotlin project class files, you may chose to specify your own
+sources using the `classesDir` property in the `fern` configuration.
+
+```
+fern {
+    classesDir = "my/classes/root"
+}
+```
+
+By default the decompiler outputs to `$buildDir/decompiled-sources/` however you can specify your own output path
+using the `outputDir` property.
+
+```
+fern {
+    outputDir = "my/output/root"
+}
+```
+
+To run the decompiler, simply use the decompile task
+
+```
+./gradlew decompile
+```
+
+If you are decompiling after compiling source, you should run your build step first
+
+```
+./gradlew build decompile
 ```
 
 ## Sample

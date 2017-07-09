@@ -45,14 +45,20 @@ open class DecompileTask : DefaultTask() {
                 IFernflowerPreferences.UNIT_TEST_MODE to extension.unitTestMode.binaryString()
         )
 
-        val defaultClassesDir = if (pluginManager.hasPlugin("kotlin-android")) {
-            "${buildDir}/intermediates/classes"
-        } else {
-            "$buildDir/kotlin-classes"
-        }
+        val path = File(extension.classesDir.or {
+            if (pluginManager.hasPlugin("kotlin-android")) {
+                "$buildDir/intermediates/classes"
+            } else if (pluginManager.hasPlugin("kotlin")) {
+                "$buildDir/kotlin-classes"
+            } else if (pluginManager.hasPlugin("java")) {
+                "$buildDir/classes"
+            } else {
+                throw IllegalArgumentException("No classDir or compatible plugins found")
+            }
+        })
 
-        val destination = File(extension.outputDir.or("${buildDir}/decompiled-sources"))
-        val path = File(extension.classesDir.or(defaultClassesDir))
+
+        val destination = File(extension.outputDir.or { "$buildDir/decompiled-sources" })
         val decompiler = ConsoleDecompiler(destination, options).apply {
             addSpace(path, true)
         }

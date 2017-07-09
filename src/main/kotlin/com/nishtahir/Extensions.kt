@@ -7,6 +7,6 @@ operator fun <T : Any> ExtensionContainer.get(type: KClass<T>): T {
     return getByType(type.java)!!
 }
 
-fun String.or(default : String): String {
-    return if(isBlank()) { default } else { this }
+fun String.or(default: () -> String): String {
+    return if (isBlank()) { default() } else { this }
 }

@@ -46,30 +46,24 @@ open class DecompileTask : DefaultTask() {
         )
 
         val path = File(extension.classesDir.or {
-            if (pluginManager.hasPlugin("kotlin-android")) {
-                "$buildDir/intermediates/classes"
-            } else if (pluginManager.hasPlugin("kotlin")) {
-                "$buildDir/kotlin-classes"
-            } else if (pluginManager.hasPlugin("java")) {
-                "$buildDir/classes"
-            } else {
-                throw IllegalArgumentException("No classDir or compatible plugins found")
+            when {
+                pluginManager.hasPlugin("kotlin-android") -> "$buildDir/intermediates/classes"
+                pluginManager.hasPlugin("kotlin") -> "$buildDir/kotlin-classes"
+                pluginManager.hasPlugin("java") -> "$buildDir/classes"
+                else -> throw IllegalArgumentException("No classDir or compatible plugins found")
             }
         })
 
 
         val destination = File(extension.outputDir.or { "$buildDir/decompiled-sources" })
-        val decompiler = ConsoleDecompiler(destination, options).apply {
-            addSpace(path, true)
-        }
+        val decompiler = FernDecompiler(destination, options).apply { addSource(path) }
         decompiler.decompileContext()
     }
 
-    private fun Boolean.binaryString(): String {
-        return if (this) {
-            "1"
-        } else {
-            "0"
-        }
+    private fun Boolean.binaryString() = if (this) {
+        "1"
+    } else {
+        "0"
     }
+
 }

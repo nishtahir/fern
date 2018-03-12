@@ -1,26 +1,38 @@
 buildscript {
+
+    ext.artifact_name = "fern"
+    ext.group_name = "com.nishtahir"
+    ext.project_version = "0.3"
+
+
     ext.kotlin_version = "1.2.30"
+    ext.shadow_version = "2.0.2"
 
     repositories {
+        jcenter()
         mavenCentral()
     }
 
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:$shadow_version"
     }
 }
 
 apply plugin: "kotlin"
 apply plugin: "maven"
 apply plugin: "java-gradle-plugin"
+apply plugin: "com.github.johnrengelman.shadow"
 
 repositories {
+    jcenter()
     mavenCentral()
+    google()
 }
 
-archivesBaseName = 'fern'
-group = 'com.nishtahir'
-version = '0.2'
+archivesBaseName = artifact_name
+group = group_name
+version = project_version
 
 task createClasspathManifest {
     def outputDir = file("$buildDir/$name")
@@ -34,9 +46,16 @@ task createClasspathManifest {
     }
 }
 
+shadowJar {
+    baseName = artifact_name
+    classifier = "complete"
+    version = project_version
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "com.android.tools.build:gradle:3.1.0-alpha09"
 
     testImplementation "junit:junit:4.11"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

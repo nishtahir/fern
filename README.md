@@ -20,6 +20,8 @@ buildscript {
 }
 
 apply plugin: "com.nishtahir.fern"
+// or for Android projects
+apply plugin: "com.nishtahir.fern-android"
 
 ```
 
@@ -30,6 +32,7 @@ Customization options are exposed via fern extension.
 fern {
      classesDir = "" // Directory to scan for class files
      outputDir = ""  // output directory
+     enabled = true  // false disables the decompiler - useful in android projects
 
      removeBridge = true
      removeSynthetic = false
@@ -62,6 +65,7 @@ fern {
      banner = ""
      dumpOriginalLines = false
      unitTestMode = false
+
 }
 ```
 A description on what these options do and how they work can be found in the official FernFlower [documentation](https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine).
@@ -96,6 +100,18 @@ If you are decompiling after compiling source, you should run your build step fi
 ./gradlew build decompile
 ```
 
+## Android projects
+
+For Android projects decompilation works by registering a transform step via the transform api, however decompiling during
+every build phase can slow down development for this reason, `fern` exposes an `enabled` setting to skip the decompilation step.
+
+
+```
+fern {
+    enabled = false
+}
+```
+
 ## Sample
 
 ```
@@ -107,7 +123,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "com.github.nishtahir:fern:7bd46db119"
+	    classpath 'com.github.nishtahir:fern:-SNAPSHOT'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

@@ -50,6 +50,7 @@ shadowJar {
     baseName = artifact_name
     classifier = "complete"
     version = project_version
+    zip64 true
 }
 
 dependencies {

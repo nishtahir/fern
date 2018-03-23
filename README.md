@@ -15,11 +15,15 @@ buildscript {
     }
 
     dependencies {
-	    classpath 'com.github.nishtahir:fern:-SNAPSHOT'
+	    classpath 'com.github.nishtahir:fern:0.3.1'
+
+	    // or place the jar in <project-root/libs> folder
+	    classpath 'libs/fern-0.3.1'
     }
 }
 
 apply plugin: "com.nishtahir.fern"
+
 // or for Android projects
 apply plugin: "com.nishtahir.fern-android"
 
@@ -68,7 +72,8 @@ fern {
 
 }
 ```
-A description on what these options do and how they work can be found in the official FernFlower [documentation](https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine).
+A description on what these options do and how they work can be found in the official
+FernFlower [documentation](https://github.com/JetBrains/intellij-community/tree/master/plugins/java-decompiler/engine).
 
 While sensible defaults have been set for Java and Kotlin project class files, you may chose to specify your own
 sources using the `classesDir` property in the `fern` configuration.
@@ -103,7 +108,8 @@ If you are decompiling after compiling source, you should run your build step fi
 ## Android projects
 
 For Android projects decompilation works by registering a transform step via the transform api, however decompiling during
-every build phase can slow down development for this reason, `fern` exposes an `enabled` setting to skip the decompilation step.
+every build phase can slow down development for this reason, `fern` exposes an `enabled` setting allow you
+to skip the decompilation step.
 
 
 ```
@@ -116,7 +122,7 @@ fern {
 
 ```
 buildscript {
-    ext.kotlin_version = "1.1.2"
+    ext.kotlin_version = "1.2.30"
 
     repositories {
         maven { url "https://jitpack.io" }

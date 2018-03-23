@@ -2,7 +2,7 @@ buildscript {
 
     ext.artifact_name = "fern"
     ext.group_name = "com.nishtahir"
-    ext.project_version = "0.3"
+    ext.project_version = "0.3.1"
 
 
     ext.kotlin_version = "1.2.30"
@@ -21,7 +21,6 @@ buildscript {
 
 apply plugin: "kotlin"
 apply plugin: "maven"
-apply plugin: "java-gradle-plugin"
 apply plugin: "com.github.johnrengelman.shadow"
 
 repositories {
@@ -48,15 +47,22 @@ task createClasspathManifest {
 
 shadowJar {
     baseName = artifact_name
-    classifier = "complete"
+    classifier = ""
     version = project_version
-    zip64 true
 }
 
+tasks.jar.enabled = false
+assemble.dependsOn(shadowJar)
+install.dependsOn(shadowJar)
+
+
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "com.android.tools.build:gradle:3.1.0-alpha09"
+    implementation files('libs/fernflower-6f30e38.jar')
+
+    compileOnly localGroovy()
+    compileOnly gradleApi()
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "com.android.tools.build:gradle:3.1.0-alpha09"
 
     testImplementation "junit:junit:4.11"
     testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"

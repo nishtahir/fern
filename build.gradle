@@ -2,7 +2,7 @@ buildscript {
 
     ext.artifact_name = "fern"
     ext.group_name = "com.nishtahir"
-    ext.project_version = "0.3.1"
+    ext.project_version = "0.3.2"
 
 
     ext.kotlin_version = "1.2.30"
@@ -57,7 +57,7 @@ install.dependsOn(shadowJar)
 
 
 dependencies {
-    implementation files('libs/fernflower-6f30e38.jar')
+    implementation files('libs/fernflower-6de5e97.jar')
 
     compileOnly localGroovy()
     compileOnly gradleApi()
